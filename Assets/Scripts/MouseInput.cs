@@ -1,8 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MouseInput : MonoBehaviour
 {
+    public delegate void NotifyOnMouseInput(Vector3 newPosition);
+    public static event NotifyOnMouseInput MouseInputEvent = delegate { };
+
     private GameObject dino;
     private Vector3 mousePos;
     private Vector3 worldPos; 
@@ -23,9 +27,11 @@ public class MouseInput : MonoBehaviour
         {
             mousePos = Input.mousePosition;
             worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
             Debug.Log("Dino Moved to " + worldPos);
-            dino.transform.position = new Vector3(worldPos.x, 1, worldPos.z);
+
+
+           // dino.transform.position = new Vector3(worldPos.x, 1, worldPos.z);
+           MouseInputEvent(new Vector3(worldPos.x, 1, worldPos.z));
 
         }
  
